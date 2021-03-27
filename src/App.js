@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { useState, useEffect, useMemo } from 'react';
+import OKRAccordion from './OKRAccordion';
+import { fetchOKRs } from './utils';
+import { processOKRData } from './logic';
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [okrs, setOkrs] = useState([]);
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await fetchOKRs();
+            setOkrs(response.data);
+        };
+        fetchData();
+    }, []);
+
+    const [parentObjectives, childObjectivesByParent] = useMemo(() => processOKRData(okrs), [okrs]);
+
+    return (
+        <div className="app-container">
+            {parentObjectives &&
+                parentObjectives.map((objective) => {
+                    return <OKRAccordion key={`okr-${objective.id}`} parentObjective={objective} childObjectives={childObjectivesByParent[objective.id]} />;
+                })}
+        </div>
+    );
 }
 
 export default App;

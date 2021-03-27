@@ -1,0 +1,50 @@
+.app-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.accordion > input[type='checkbox'] {
+    position: absolute;
+    top: 15px;
+}
+
+.accordion .content {
+    overflow-y: hidden;
+    height: 0;
+    transition: height 0.3s ease;
+}
+
+.accordion > input[type='checkbox']:checked ~ .content {
+    height: auto;
+    overflow: visible;
+}
+
+.accordion label {
+    display: block;
+}
+
+.accordion {
+    margin-bottom: 1em;
+    position: relative;
+}
+
+.accordion .handle {
+    margin: 0;
+    font-size: 1.125em;
+    line-height: 1.2em;
+}
+
+.accordion label {
+    color: #333;
+    cursor: pointer;
+    font-weight: normal;
+    padding: 15px;
+    background: #e8e8e8;
+}
+
+.accordion label:hover,
+.accordion label:focus {
+    background: #d8d8d8;
+}
