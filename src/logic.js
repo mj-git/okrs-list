@@ -21,3 +21,13 @@ export const processOKRData = (okrs) => {
     }
     return [];
 };
+
+export const getCategories = (okrs) => {
+    const categories = [];
+    okrs.forEach((okr) => {
+        if (!categories.includes(okr.category)) {
+            categories.push(okr.category);
+        }
+    });
+    return categories;
+};
